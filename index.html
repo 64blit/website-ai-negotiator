@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Deal-Maker Proposal | Edmund Dao</title>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-blue: #2563eb;
+            --dark-blue: #1e40af;
+            --ink-black: #1a1a1a;
+            --paper-white: #fafaf9;
+            --paper-beige: #f5f5f0;
+            --typewriter-red: #dc2626;
+            --shadow-gray: #64748b;
+            --border-gray: #d4d4d8;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f5f5f0 0%, #fafaf9 100%);
+            color: var(--ink-black);
+            line-height: 1.8;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* Paper texture overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0,0,0,0.03) 2px,
+                    rgba(0,0,0,0.03) 4px
+                );
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Cover Page */
+        .cover-page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            background: white;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            margin-bottom: 60px;
+            border-radius: 8px;
+        }
+        
+        .cover-page::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: var(--primary-blue);
+        }
+        
+        .stamp {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            transform: rotate(15deg);
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--typewriter-red);
+            border: 3px solid var(--typewriter-red);
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .cover-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--ink-black);
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+            position: relative;
+        }
+        
+        .cover-title::after {
+            content: '_';
+            animation: blink 1s infinite;
+            color: var(--primary-blue);
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .cover-subtitle {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.25rem;
+            color: var(--shadow-gray);
+            margin-bottom: 60px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        
+        .cover-details {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            line-height: 2;
+        }
+        
+        .cover-details strong {
+            color: var(--primary-blue);
+            font-weight: 600;
+        }
+        
+        .cover-footer {
+            position: absolute;
+            bottom: 40px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--shadow-gray);
+        }
+        
+        .cover-footer a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+        
+        .cover-footer a:hover {
+            border-color: var(--primary-blue);
+        }
+        
+        /* Content Sections */
+        .content {
+            background: white;
+            padding: 60px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            position: relative;
+        }
+        
+        /* Page holes effect */
+        .content::before,
+        .content::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--paper-beige);
+            border-radius: 50%;
+            top: 30px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .content::before {
+            left: 20px;
+        }
+        
+        .content::after {
+            right: 20px;
+        }
+        
+        h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--ink-black);
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary-blue);
+            position: relative;
+        }
+        
+        h1::before {
+            content: '#';
+            color: var(--primary-blue);
+            margin-right: 10px;
+        }
+        
+        h2 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark-blue);
+            margin: 40px 0 20px;
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        h2::before {
+            content: '##';
+            position: absolute;
+            left: 0;
+            color: var(--primary-blue);
+            opacity: 0.5;
+        }
+        
+        h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--ink-black);
+            margin: 30px 0 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        p {
+            margin: 20px 0;
+            text-align: justify;
+            font-size: 1.05rem;
+        }
+        
+        /* Typewriter effect for key points */
+        .typewriter {
+            font-family: 'Space Mono', monospace;
+            background: var(--paper-beige);
+            padding: 20px 30px;
+            margin: 30px 0;
+            border-left: 4px solid var(--primary-blue);
+            position: relative;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .typewriter::before {
+            content: '>';
+            position: absolute;
+            left: 10px;
+            color: var(--primary-blue);
+            font-weight: 700;
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 40px;
+        }
+        
+        li {
+            margin: 12px 0;
+            font-size: 1.05rem;
+        }
+        
+        ul li::marker {
+            color: var(--primary-blue);
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            margin: 30px 0;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        th {
+            background: var(--ink-black);
+            color: white;
+            font-weight: 600;
+            padding: 15px;
+            text-align: left;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-gray);
+            background: white;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:nth-child(even) td {
+            background: var(--paper-beige);
+        }
+        
+        /* Code blocks */
+        pre, code {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        code {
+            background: var(--paper-beige);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--typewriter-red);
+        }
+        
+        pre {
+            background: var(--ink-black);
+            color: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 30px 0;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Investment section */
+        .investment-box {
+            background: linear-gradient(135deg, var(--paper-beige) 0%, white 100%);
+            border: 2px solid var(--primary-blue);
+            border-radius: 8px;
+            padding: 30px;
+            margin: 40px 0;
+            position: relative;
+        }
+        
+        .investment-box::before {
+            content: 'INVESTMENT';
+            position: absolute;
+            top: -12px;
+            left: 30px;
+            background: white;
+            padding: 0 10px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            color: var(--primary-blue);
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin: 30px 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 25px;
+            bottom: -30px;
+            width: 2px;
+            background: var(--border-gray);
+        }
+        
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        
+        .timeline-marker {
+            width: 30px;
+            height: 30px;
+            background: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            z-index: 1;
+        }
+        
+        .timeline-content {
+            margin-left: 20px;
+            flex: 1;
+        }
+        
+        .timeline-content h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--ink-black);
+            margin-bottom: 8px;
+        }
+        
+        .timeline-content p {
+            color: var(--shadow-gray);
+            font-size: 0.95rem;
+            margin: 5px 0;
+        }
+        
+        /* Signature section */
+        .signature-section {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 2px dashed var(--border-gray);
+        }
+        
+        .signature-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        
+        .signature-field {
+            padding: 20px;
+            border: 1px solid var(--border-gray);
+            border-radius: 8px;
+            background: var(--paper-beige);
+        }
+        
+        .signature-field h4 {
+            font-family: 'Space Mono', monospace;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--ink-black);
+        }
+        
+        .signature-line {
+            border-bottom: 2px solid var(--ink-black);
+            margin: 30px 0 10px;
+            position: relative;
+        }
+        
+        .signature-line::after {
+            content: 'Signature';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            font-size: 0.85rem;
+            color: var(--shadow-gray);
+            font-family: 'Space Mono', monospace;
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .content {
+                box-shadow: none;
+                margin-bottom: 0;
+                page-break-after: always;
+            }
+            
+            .cover-page {
+                page-break-after: always;
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .cover-title {
+                font-size: 2rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            .signature-box {
+                grid-template-columns: 1fr;
+            }
+            
+            table {
+                font-size: 0.85rem;
+            }
+            
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Cover Page -->
+        <div class="cover-page">
+            <div class="stamp">Confidential</div>
+            <h1 class="cover-title">AI Deal-Maker</h1>
+            <p class="cover-subtitle">Software Development Proposal</p>
+            
+            <div class="cover-details">
+                <p><strong>PROJECT:</strong> Silent Negotiation Web Application</p>
+                <p><strong>CLIENT:</strong> David Vu</p>
+                <p><strong>DEVELOPER:</strong> Edmund Dao</p>
+                <p><strong>DATE:</strong> August 11, 2025</p>
+                <p><strong>VALID UNTIL:</strong> August 25, 2025</p>
+            </div>
+            
+            <div class="cover-footer">
+                <a href="https://64blit.com">64blit.com</a> | <a href="tel:6198223013">(619) 822-3013</a> | <a href="mailto:edmund@64blit.com">edmund@64blit.com</a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <h1>Executive Summary</h1>
+            
+            <div class="typewriter">
+                I'll build your AI Deal-Maker platform as a modern web application - a secure negotiation tool where buyers and sellers can find fair deals without revealing their limits.
+            </div>
+            
+            <p>The MVP will deliver a working silent negotiation system with room creation, user accounts, and a clean game theory-based workflow. Phase 2 will add AI agents that can negotiate on behalf of users.</p>
+            
+            <div class="investment-box">
+                <h3>Investment Overview</h3>
+                <ul>
+                    <li><strong>Phase 1 Investment:</strong> $150/hour, max $6,000 (40 hours)</li>
+                    <li><strong>Phase 2 Investment:</strong> $150/hour, max $18,000 (120 hours)</li>
+                    <li><strong>Total Timeline:</strong> 6-8 weeks for both phases</li>
+                    <li><strong>Start Date:</strong> August 25, 2025</li>
+                </ul>
+            </div>
+            
+            <h2>Project Understanding</h2>
+            
+            <p>Based on our discussion, you need a web platform that solves the fundamental problem of negotiation deadlock - where buyers and sellers can't find a deal because neither wants to reveal their true limits.</p>
+            
+            <h3>The Core Innovation</h3>
+            <ul>
+                <li>Sellers set minimum prices privately</li>
+                <li>Buyers set maximum prices privately</li>
+                <li>The system finds deals without revealing either party's limits</li>
+                <li>Optional price revelation for strategic advantage ($1 fee)</li>
+                <li>Can be run manually or with AI agents</li>
+            </ul>
+            
+            <h3>Success Metrics</h3>
+            <ul>
+                <li>Working negotiation rooms with unique URLs</li>
+                <li>Secure state machine that protects price privacy</li>
+                <li>Clean, responsive web UI that builds user trust</li>
+                <li>AI agents that can negotiate effectively (Phase 2)</li>
+            </ul>
+        </div>
+        
+        <div class="content">
+            <h1>Phase 1: MVP Web Application</h1>
+            <p><strong>Maximum: 40 hours @ $150/hour = $6,000</strong></p>
+            
+            <h2>Core Deliverables</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Features</th>
+                        <th>Acceptance Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>User System</strong></td>
+                        <td>Account creation with UUID<br>Authentication and encryption<br>Password-based security<br>Session management</td>
+                        <td>Users can securely access rooms</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Room Creation</strong></td>
+                        <td>Seller creates negotiation room<br>Unique room URLs<br>Room status management<br>Expiration handling</td>
+                        <td>Rooms accessible via shareable links</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Negotiation Engine</strong></td>
+                        <td>State machine workflow<br>Price overlap detection<br>Midpoint calculation<br>Offer history tracking</td>
+                        <td>Game theory logic works correctly</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deal Clauses</strong></td>
+                        <td>Add/edit/remove clauses<br>Clause approval system<br>Version tracking<br>Both parties must approve</td>
+                        <td>Changes require mutual consent</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Web Interface</strong></td>
+                        <td>Clean, modern React interface<br>Mobile-responsive design<br>Real-time updates<br>Clear status indicators</td>
+                        <td>Professional, trustworthy appearance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Security</strong></td>
+                        <td>HTTPS/SSL encryption<br>Secure authentication<br>Price data protection<br>Audit logging</td>
+                        <td>Data never exposed inappropriately</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>State Machine Flow</h2>
+            
+            <pre>
+1. ROOM_CREATED → Seller sets minimum price
+2. BUYER_JOINED → Buyer sets maximum price
+3. CHECKING_OVERLAP →
+   a. If overlap: DEAL_POSSIBLE → Show accept/negotiate options
+   b. If no overlap: NO_DEAL → Allow new prices or exit
+4. NEGOTIATING → Users adjust prices
+5. DEAL_ACCEPTED or DEAL_TERMINATED
+            </pre>
+            
+            <h2>Development Timeline</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h4>Day 1-2: Foundation</h4>
+                        <p>Database design and setup</p>
+                        <p>User authentication system</p>
+                        <p>Core API structure</p>
+                        <p>Real-time communication setup</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h4>Day 3-4: Core Features</h4>
+                        <p>Room creation/management</p>
+                        <p>State machine implementation</p>
+                        <p>Price checking logic</p>
+                        <p>Clause management system</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h4>Day 5: UI & Testing</h4>
+                        <p>Complete web interface</p>
+                        <p>Real-time updates</p>
+                        <p>Security verification</p>
+                        <p>End-to-end testing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <h1>Phase 2: AI Integration</h1>
+            <p><strong>Maximum: 120 hours @ $150/hour = $18,000</strong></p>
+            
+            <h2>AI Agent Deliverables</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Features</th>
+                        <th>Acceptance Criteria</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>AI Negotiator Agent</strong></td>
+                        <td>Autonomous price adjustment<br>Strategic decision making<br>Pattern recognition<br>Deal timing optimization</td>
+                        <td>Achieves better outcomes than random</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Workflow Integration</strong></td>
+                        <td>Automated workflows<br>ChatGPT API integration<br>State synchronization<br>Error handling</td>
+                        <td>Smooth automated negotiations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>User Control Panel</strong></td>
+                        <td>Enable/disable AI mode<br>Set AI parameters<br>Override AI decisions<br>Approval requirements</td>
+                        <td>Users maintain control</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI Chat Interface</strong></td>
+                        <td>Natural language negotiation<br>Context-aware responses<br>Sentiment analysis<br>Strategic messaging</td>
+                        <td>Convincing human-like interaction</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Coaching System</strong></td>
+                        <td>Price suggestions<br>Negotiation tips<br>Market analysis<br>Success probability</td>
+                        <td>Helps users make better deals</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Analytics Dashboard</strong></td>
+                        <td>Negotiation metrics<br>Success rates<br>Price patterns<br>User behavior insights</td>
+                        <td>Data-driven improvements</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h2>Week 3-6 Timeline</h2>
+            
+            <div class="typewriter">
+                Week 3-4: AI Foundation - Workflow architecture, ChatGPT integration, context management<br><br>
+                Week 5: Advanced Features - Chat negotiation, coaching algorithms, analytics framework<br><br>
+                Week 6: Polish & Optimization - AI tuning, performance optimization, production deployment prep
+            </div>
+        </div>
+        
+        <div class="content">
+            <h1>Security & Privacy</h1>
+            
+            <h2>Data Protection</h2>
+            <ul>
+                <li><strong>Encryption:</strong> All data encrypted at rest and in transit (HTTPS)</li>
+                <li><strong>Price Privacy:</strong> Prices never revealed unless explicitly authorized</li>
+                <li><strong>User-Managed:</strong> Password-based encryption controlled by users</li>
+                <li><strong>Audit Trail:</strong> Complete logs for security review</li>
+            </ul>
+            
+            <h2>AI Boundaries</h2>
+            <ul>
+                <li>Each AI agent only sees its own side's data</li>
+                <li>No cross-contamination between buyer/seller contexts</li>
+                <li>Chat history isolated per party</li>
+                <li>No training on user data</li>
+            </ul>
+        </div>
+        
+        <div class="content">
+            <h1>Investment & Terms</h1>
+            
+            <h2>Payment Structure</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Milestone</th>
+                        <th>Amount</th>
+                        <th>Due</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Phase 1 Start</strong></td>
+                        <td>$2,000 (retainer)</td>
+                        <td>Upon signing</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 1 Midpoint</strong></td>
+                        <td>$2,000</td>
+                        <td>Day 3 completion</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 1 Completion</strong></td>
+                        <td>$2,000</td>
+                        <td>MVP delivery</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 2 Start</strong></td>
+                        <td>$6,000</td>
+                        <td>Phase 2 kickoff</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 2 Midpoint</strong></td>
+                        <td>$6,000</td>
+                        <td>Week 4 completion</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phase 2 Completion</strong></td>
+                        <td>$6,000</td>
+                        <td>Final delivery</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="investment-box">
+                <h3>Total Maximum Investment: $24,000</h3>
+            </div>
+            
+            <h2>What's Included</h2>
+            <ul>
+                <li>Complete React TypeScript web application</li>
+                <li>Backend infrastructure and database</li>
+                <li>State management and real-time updates</li>
+                <li>AI workflow configurations</li>
+                <li>Source code ownership transfers to you</li>
+                <li>30 days of bug fixes post-launch</li>
+                <li>Deployment assistance to Google Cloud</li>
+                <li>Comprehensive documentation</li>
+            </ul>
+        </div>
+        
+        <div class="content">
+            <h1>Risk Mitigation</h1>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Risk</th>
+                        <th>Mitigation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Complex game theory</td>
+                        <td>Start with simple overlap detection, iterate</td>
+                    </tr>
+                    <tr>
+                        <td>User trust issues</td>
+                        <td>Clean UI, clear messaging, security audit ready</td>
+                    </tr>
+                    <tr>
+                        <td>AI unpredictability</td>
+                        <td>Human approval required, override always available</td>
+                    </tr>
+                    <tr>
+                        <td>Scaling concerns</td>
+                        <td>Architecture designed for cloud migration</td>
+                    </tr>
+                    <tr>
+                        <td>Team handoff</td>
+                        <td>Comprehensive documentation throughout</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="content">
+            <h1>Next Steps</h1>
+            
+            <div class="typewriter">
+                Ready to build the future of negotiation? Here's how we proceed:
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker">1</div>
+                    <div class="timeline-content">
+                        <h4>Sign this proposal</h4>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker">2</div>
+                    <div class="timeline-content">
+                        <h4>Provide necessary access and API keys</h4>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker">3</div>
+                    <div class="timeline-content">
+                        <h4>Pay Phase 1 retainer ($2,000)</h4>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker">4</div>
+                    <div class="timeline-content">
+                        <h4>Kick-off call on August 25, 2025</h4>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker">5</div>
+                    <div class="timeline-content">
+                        <h4>MVP Demo by September 1, 2025</h4>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="signature-section">
+                <h2>Agreement</h2>
+                <p>By signing below, both parties agree to the terms outlined in this proposal.</p>
+                
+                <div class="signature-box">
+                    <div class="signature-field">
+                        <h4>For David Vu</h4>
+                        <div class="signature-line"></div>
+                        <p>Name: David Vu</p>
+                        <p>Date: _____________</p>
+                    </div>
+                    
+                    <div class="signature-field">
+                        <h4>For Edmund Dao</h4>
+                        <div class="signature-line"></div>
+                        <p>Edmund Dao</p>
+                        <p>Full-Stack Developer</p>
+                        <p>Date: _____________</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 60px; padding: 40px 0; border-top: 1px solid var(--border-gray);">
+                <p style="font-family: 'JetBrains Mono', monospace; color: var(--shadow-gray);">
+                    <strong>Questions?</strong><br>
+                    Edmund Dao<br>
+                    <a href="mailto:edmund@64blit.com" style="color: var(--primary-blue); text-decoration: none;">edmund@64blit.com</a> | 
+                    <a href="tel:6198223013" style="color: var(--primary-blue); text-decoration: none;">(619) 822-3013</a><br>
+                    <a href="https://64blit.com" style="color: var(--primary-blue); text-decoration: none;">64blit.com</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
