@@ -577,8 +577,8 @@
             <ul>
                 <li>Sellers set minimum prices privately</li>
                 <li>Buyers set maximum prices privately</li>
-                <li>The system finds deals without revealing either party's limits</li>
-                <li>Optional price revelation for strategic advantage ($1 fee)</li>
+                <li>The system provides new offer suggestions without revealing either party's limits</li>
+                <li>Optional price revelation for seller (a fee)</li>
                 <li>Can be run manually or with AI agents</li>
             </ul>
 
@@ -608,15 +608,14 @@
                 <tbody>
                     <tr>
                         <td><strong>User System</strong></td>
-                        <td>Account creation with UUID<br>Authentication and encryption<br>Password-based
-                            security<br>Session management</td>
+                        <td>Account creation with UUID<br>Authentication and encryption<br>Session management</td>
                         <td>Users can securely access rooms</td>
                     </tr>
                     <tr>
                         <td><strong>Room Creation</strong></td>
                         <td>Seller creates negotiation room<br>Unique room URLs<br>Room status management<br>Expiration
                             handling</td>
-                        <td>Rooms accessible via shareable links</td>
+                        <td>Rooms accessible via shareable links/QR code</td>
                     </tr>
                     <tr>
                         <td><strong>Negotiation Engine</strong></td>
@@ -626,7 +625,7 @@
                     </tr>
                     <tr>
                         <td><strong>Deal Clauses</strong></td>
-                        <td>Add/edit/remove clauses<br>Clause approval system<br>Version tracking<br>Both parties must
+                        <td>Add/edit/remove clauses<br>Clause approval system<br>Both parties must
                             approve</td>
                         <td>Changes require mutual consent</td>
                     </tr>
@@ -823,7 +822,7 @@
             </table>
 
             <div class="investment-box">
-                <h3>Total Maximum Investment: $24,000</h3>
+                <h3>Total Investment: $24,000</h3>
             </div>
 
             <h2> ## What's Included</h2>
@@ -833,7 +832,6 @@
                 <li>State management and real-time updates</li>
                 <li>AI workflow configurations</li>
                 <li>Source code ownership transfers to you</li>
-                <li>30 days of bug fixes post-launch</li>
                 <li>Deployment assistance to Google Cloud</li>
                 <li>Comprehensive documentation</li>
             </ul>
@@ -845,30 +843,33 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Risk</th>
-                        <th>Mitigation</th>
+                        <th>Key Uncertainties</th>
+                        <th>Considerations</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Complex game theory</td>
-                        <td>Start with simple overlap detection, iterate</td>
+                        <td>AI Hallucinations</td>
+                        <td>Will the agentic workflow generate negotiation offers that are illogical or outside business
+                            constraints?</td>
                     </tr>
                     <tr>
-                        <td>User trust issues</td>
-                        <td>Clean UI, clear messaging, security audit ready</td>
+                        <td>User Experience</td>
+                        <td>Can the interface be designed to be both clean and intuitive for users with varying
+                            technical backgrounds?</td>
                     </tr>
                     <tr>
-                        <td>AI unpredictability</td>
-                        <td>Human approval required, override always available</td>
+                        <td>Human Oversight</td>
+                        <td>How seamless is the process for users to review, approve, or override AI-generated offers?
+                        </td>
                     </tr>
                     <tr>
-                        <td>Scaling concerns</td>
-                        <td>Architecture designed for cloud migration</td>
+                        <td>Security & Privacy</td>
+                        <td>How will sensitive negotiation data be protected throughout the workflow and storage?</td>
                     </tr>
                     <tr>
-                        <td>Team handoff</td>
-                        <td>Comprehensive documentation throughout</td>
+                        <td>Scalability</td>
+                        <td>Will the system architecture support rapid growth and increased negotiation volume?</td>
                     </tr>
                 </tbody>
             </table>
